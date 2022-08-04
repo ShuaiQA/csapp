@@ -210,6 +210,7 @@ int negate(int x) {
  *   Max ops: 15
  *   Rating: 3
  */
+//要求：范围在 [0x30,0x39]之内的返回1,其余的返回0
 int isAsciiDigit(int x) {
     int a, u, b, l4, c, d;
     a = x >> 6;   //a must 0
@@ -221,7 +222,7 @@ int isAsciiDigit(int x) {
     c = (l4 & 0xc) ^ 0xc;  //c must not 0
     //判断42位是否同时为1
     d = (l4 & 0xa) ^ 0xa;  //d must not 0
-    return (!(a | b)) & (!!(c | d));
+    return (!(a | b)) & !(!c | !d);
 }
 
 /* 
