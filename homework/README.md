@@ -23,19 +23,13 @@ homework
 
 ## archlab lab
 
+环境配置比较困难
 
+目前完成了前两个部分
 
 
 
 ## cache lab
 
-完成了模拟部分，
-
-
-
-## archlab-handoutback lab
-
-环境配置比较困难
-
-目前完成了前两个部分
+其中64*64的矩阵miss还有待优化
 

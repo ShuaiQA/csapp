@@ -1,31 +1,28 @@
-#include<stdio.h>
-#include<stdlib.h>
-
-typedef struct {
-    int age;   //每个人的年龄
-} User;
+//
+// Created by shuai on 22-8-4.
+//
 
 
-typedef struct {
-    int num;    //班里的人数
-    User *user;
-} Class;
+#include <stdio.h>
 
-
-Class *NewClass(int num) {
-    Class *class = (Class *) malloc(sizeof(Class));
-    class->num = num;
-    class->user = (User *) malloc(sizeof(User) * num);
-    for (int i = 0; i < num; ++i) {
-        class->user[i].age = i;
+int main(){
+    int a[5][5];
+    int b[5][5];
+    int num = 0;
+    int *c = a;
+    int *d = b;
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            a[i][j] = num;
+            b[i][j] = num;
+            num++;
+        }
     }
-    return class;
-}
-
-int main() {
-    Class *class = NewClass(20);
-    for (int i = 0; i < 20; ++i) {
-        printf("%d   ",class->user[i].age);
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            printf("  %d,%d  ",a[i][j],b[i][j]);
+        }
+        printf("\n");
     }
     return 0;
 }
