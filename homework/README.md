@@ -15,11 +15,13 @@ homework
 
 
 
-
-
 ## attack 
 
-其中的4、5还需要回顾下(重做下)
+其中的第五个任务还没有完成
+
+
+
+## archlab lab
 
 
 
@@ -31,5 +33,9 @@ homework
 
 
 
+## archlab-handoutback lab
 
+环境配置比较困难
+
+目前完成了前两个部分
 
