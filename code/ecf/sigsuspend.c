@@ -8,13 +8,14 @@ void sigchld_handler(int s)
     int olderrno = errno;
     pid = Waitpid(-1, NULL, 0);
     errno = olderrno;
+    printf("sigchld catch");
 }
 
 void sigint_handler(int s)
 {
 }
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
     sigset_t mask, prev;
 
@@ -30,15 +31,20 @@ int main(int argc, char **argv)
 
         /* Wait for SIGCHLD to be received */
         pid = 0;
-        while (!pid) 
+        while (!pid)
             Sigsuspend(&prev);
 
         /* Optionally unblock SIGCHLD */
-        Sigprocmask(SIG_SETMASK, &prev, NULL); 
+        Sigprocmask(SIG_SETMASK, &prev, NULL);
 
         /* Do some work after receiving SIGCHLD */
         printf(".");
+        sleep(1);
     }
     exit(0);
 }
 /* $end sigsuspend */
+
+int main(){
+
+}

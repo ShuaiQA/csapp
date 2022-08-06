@@ -1,26 +1,22 @@
 #include "csapp.h"
 
-void initjobs()
-{
+void initjobs() {
 }
 
-void addjob(int pid)
-{
+void addjob(int pid) {
 }
 
-void deletejob(int pid)
-{
+void deletejob(int pid) {
 }
 
 /* $begin procmask2 */
-void handler(int sig)
-{
+void handler(int sig) {
     int olderrno = errno;
     sigset_t mask_all, prev_all;
     pid_t pid;
-
     Sigfillset(&mask_all);
     while ((pid = waitpid(-1, NULL, 0)) > 0) { /* Reap a zombie child */
+        printf("cur pid = [%d]",pid);
         Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
         deletejob(pid); /* Delete the child from the job list */
         Sigprocmask(SIG_SETMASK, &prev_all, NULL);
@@ -29,9 +25,8 @@ void handler(int sig)
         Sio_error("waitpid error");
     errno = olderrno;
 }
-    
-int main(int argc, char **argv)
-{
+
+int main(int argc, char **argv) {
     int pid;
     sigset_t mask_all, mask_one, prev_one;
 
@@ -47,7 +42,7 @@ int main(int argc, char **argv)
             Sigprocmask(SIG_SETMASK, &prev_one, NULL); /* Unblock SIGCHLD */
             Execve("/bin/date", argv, NULL);
         }
-        Sigprocmask(SIG_BLOCK, &mask_all, NULL); /* Parent process */  
+        Sigprocmask(SIG_BLOCK, &mask_all, NULL); /* Parent process */
         addjob(pid);  /* Add the child to the job list */
         Sigprocmask(SIG_SETMASK, &prev_one, NULL);  /* Unblock SIGCHLD */
     }
