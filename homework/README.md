@@ -29,3 +29,8 @@ homework
 
 详细的过程查看step.md
 
+## malloclab
+
+理解了相应的mem、mm模型。
+
+完成了内存分配算法的首次适应算法。
