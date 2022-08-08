@@ -20,8 +20,7 @@ void get_filetype(char *filename, char *filetype);
 
 void serve_dynamic(int fd, char *filename, char *cgiargs);
 
-void clienterror(int fd, char *cause, char *errnum,
-                 char *shortmsg, char *longmsg);
+void clienterror(int fd, char *cause, char *errnum, char *shortmsg, char *longmsg);
 
 int main(int argc, char **argv) {
     int listenfd, connfd;
@@ -63,17 +62,20 @@ void doit(int fd) {
     Rio_readinitb(&rio, fd);
     if (!Rio_readlineb(&rio, buf, MAXLINE))  //line:netp:doit:readrequest
         return;
-    printf("%s", buf);
     sscanf(buf, "%s %s %s", method, uri, version);       //line:netp:doit:parserequest
+    printf("cur method:[%s],url:[%s],version:[%s]\n", method, uri, version);
     if (strcasecmp(method, "GET")) {                     //line:netp:doit:beginrequesterr
         clienterror(fd, method, "501", "Not Implemented",
                     "Tiny does not implement this method");
         return;
-    }                                                    //line:netp:doit:endrequesterr
+    }
     read_requesthdrs(&rio);                              //line:netp:doit:readrequesthdrs
 
+    printf("filename:[%s],cgiargs:[%s]\n",filename,cgiargs);
     /* Parse URI from GET request */
     is_static = parse_uri(uri, filename, cgiargs);       //line:netp:doit:staticcheck
+
+    printf("filename:[%s],cgiargs:[%s]\n",filename,cgiargs);
     if (stat(filename, &sbuf) < 0) {                     //line:netp:doit:beginnotfound
         clienterror(fd, filename, "404", "Not found",
                     "Tiny couldn't find this file");
@@ -106,10 +108,10 @@ void read_requesthdrs(rio_t *rp) {
     char buf[MAXLINE];
 
     Rio_readlineb(rp, buf, MAXLINE);
-    printf("%s", buf);
+    printf("read_requesthdrs [%s]\n", buf);
     while (strcmp(buf, "\r\n")) {          //line:netp:readhdrs:checkterm
         Rio_readlineb(rp, buf, MAXLINE);
-        printf("%s", buf);
+        printf("buf:[%s]\n", buf);
     }
     return;
 }
