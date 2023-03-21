@@ -1,0 +1,8 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/shuai/Downloads/proxylab-handout'
+gcc -g -Wall -c proxy.c
+gcc -g -Wall -c csapp.c
+gcc -g -Wall -c cache.c
+gcc -g -Wall proxy.o csapp.o cache.o -o proxy -lpthread
+make: Leaving directory '/home/shuai/Downloads/proxylab-handout'
+ 

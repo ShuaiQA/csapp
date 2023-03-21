@@ -1,0 +1,44 @@
+#Excution begins at address 0
+	.pos 0
+	irmovq stack, %rsp
+	call main
+	halt
+.align 8
+#Source block
+src:
+	.quad 0x00a
+	.quad 0x0b0
+	.quad 0xc00
+# Destination block
+dest:
+	.quad 0x111
+	.quad 0x222
+	.quad 0x333
+
+main:
+    irmovq src,%rdi     # 源地址
+    irmovq dest,%rsi    # 目标地址
+    irmovq $3,%rdx       # 第三个参数
+    call copy_block
+    ret
+
+copy_block:
+    irmovq $0,%rax      # 返回值清0
+    irmovq $1,%r10      # 将1放到r10中
+    irmovq $8,%r11
+loop:
+    andq %rdx,%rdx       # 查看rdx的值是否是0，如果是0退出
+    je last
+    mrmovq (%rdi),%r9     # 将第一个地址值放到寄存器中
+    addq %r11,%rdi        # 源地址自增
+    rmmovq %r9,(%rsi)     # 将取出来的值放到rsi目的内存中
+    addq %r11,%rsi        # 目标地址自增
+    xorq %r9,%rax         # result ^= val
+    subq %r10,%rdx
+    jmp loop
+last:
+    ret
+
+# Stack starts here and grows to lower addresses
+	.pos 0x300
+stack:
